@@ -5,8 +5,9 @@ export interface Movie {
   year: string;
   genres: string[];
   poster: string;
-  overview: string; // Eğer overview verisini de kullanacaksanız
+  overview: string;
   backdrop_path: string;
+  backdrop_paths: string[];
   imdbRating?: string;
   tomatoRating?: string;
   rottenTomatoes?: string;
@@ -14,4 +15,6 @@ export interface Movie {
   genre_ids: number[];
   vote_average  : number;
   poster_path: string;
+  trailerLink: string;
+
 }

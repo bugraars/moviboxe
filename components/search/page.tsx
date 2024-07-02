@@ -20,16 +20,14 @@ const Search = () => {
     "28": "Action",
     "12": "Adventure",
     "16": "Animation",
-    // ... diğer tür eşlemeleri
   };
 
+  
   useEffect(() => {
     const localeCookie = Cookies.get('NEXT_LOCALE') || 'en';
     const languageMap: { [key: string]: string } = {
       en: 'en-US',
       de: 'de-DE',
-      tr: 'tr-TR',
-      // Diğer diller
     };
     setLanguage(languageMap[localeCookie] || 'en-US');
 
@@ -49,7 +47,6 @@ const Search = () => {
     let newQuery = event.target.value;
     setQuery(newQuery);
 
-    // Birden fazla boşluğu tek bir boşluğa indirgeme
     newQuery = newQuery.replace(/\s+/g, ' ');
 
     if (newQuery.trim().length > 0) {
@@ -57,8 +54,7 @@ const Search = () => {
         method: 'GET',
         headers: {
           accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NmM3MDAyY2RlODFlZTZmMjRhYjRkZjJiNmFiZGEyYiIsIm5iZiI6MTcxOTYwOTIxOS45NTgxOSwic3ViIjoiNjY3ZjIwMGE2OTg3ZDc0YmFhM2JkYjZlIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.AR1vIdswYVMLiAZus1Vs_M0Ta-OAeefkF1dxT66xsTQ'
-        }
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_KEY}`}
       };
 
       try {
@@ -79,7 +75,7 @@ const Search = () => {
         }));
 
         setLocalResults(fetchedResults);
-        setResults(fetchedResults); // Global sonuçları güncelle
+        setResults(fetchedResults); 
         setShowResults(true);
       } catch (err) {
         console.error(err);

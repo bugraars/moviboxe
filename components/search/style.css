@@ -86,46 +86,44 @@
     color: #9CA3AF;
 }
 
-/* Tablet ve daha küçük ekranlar için medya sorguları */
 @media (max-width: 768px) {
     .search-wrapper {
         max-width: 100%;
-        padding: 0 10px; /* Kenar boşluklarını daraltarak daha iyi bir görünüm sağlıyoruz */
+        padding: 0 10px; 
     }
 
     .search-input {
-        padding: 10px 35px 10px 14px; /* İçeriği biraz daraltarak uyum sağlıyoruz */
-        font-size: 14px; /* Font boyutunu küçültüyoruz */
+        padding: 10px 35px 10px 14px; 
+        font-size: 14px; 
     }
 
     .search-button {
-        right: 10px; /* Butonu biraz sola çekiyoruz */
+        right: 10px;
     }
 
     .search-results {
-        padding: 8px; /* Kenar boşluklarını daraltıyoruz */
+        padding: 8px; 
     }
 
     .search-result-item {
-        padding: 8px; /* Kenar boşluklarını daraltıyoruz */
+        padding: 8px; 
     }
 
     .result-poster {
         width: 40px;
-        height: 60px; /* Görselleri küçültüyoruz */
-        margin-right: 8px; /* Boşluğu daraltıyoruz */
+        height: 60px; 
+        margin-right: 8px; 
     }
 
     .result-info h3 {
-        font-size: 14px; /* Font boyutunu küçültüyoruz */
+        font-size: 14px; 
     }
 
     .result-info p {
-        font-size: 12px; /* Font boyutunu küçültüyoruz */
+        font-size: 12px; 
     }
 }
 
-/* 1440px ve üstü ekran genişlikleri için */
 @media (min-width: 1280px) {
     .search-wrapper {
         width: 525px;

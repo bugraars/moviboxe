@@ -12,7 +12,7 @@ import './style.css';
 interface MovieSliderProps {
     endpoint: string;
     title: string;
-    id: string; // Unique ID for each slider
+    id: string;
 }
 
 const MovieSlider: React.FC<MovieSliderProps> = ({ endpoint, title, id }) => {
@@ -43,6 +43,10 @@ const MovieSlider: React.FC<MovieSliderProps> = ({ endpoint, title, id }) => {
                     spaceBetween={10}
                     slidesPerView={1.2}
                     breakpoints={{
+                        480: {
+                            slidesPerView: 1.5,
+                            spaceBetween: 20,
+                        },
                         640: {
                             slidesPerView: 2,
                             spaceBetween: 20,

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { DM_Sans } from '@next/font/google';
 import "./globals.css";
 import Navbar from '@/components/navbar/page';
-// import Footer from '@/components/footer/Footer';
+import Footer from '@/components/footer/page';
 import { SearchProvider } from '@/context/searchContext';
 
 const dmSans = DM_Sans({
@@ -32,7 +32,7 @@ export default function RootLayout({
         <SearchProvider>
           <Navbar />
           {children}
-          {/* <Footer /> */}
+          <Footer />
         </SearchProvider>
       </body>
     </html>
