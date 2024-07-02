@@ -1,0 +1,45 @@
+/* Swiper navigation buttons */
+.swiper-button-next,
+.swiper-button-prev {
+    color: #6B7280; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10; 
+    position: absolute;
+}
+
+.swiper-button-next {
+    right: -20px; /* Slider dışına taşınması için negatif değer */
+}
+
+.swiper-button-prev {
+    left: -20px; /* Slider dışına taşınması için negatif değer */
+}
+
+.custom-swiper {
+    padding-left: 20px; 
+    padding-right: 20px; 
+    overflow: visible; 
+    position: relative; 
+}
+
+@media (max-width: 768px) {
+    .swiper-button-next,
+    .swiper-button-prev {
+        display: none; 
+    }
+
+    .swiper-slide {
+        width: 80% !important;
+    }
+
+    h3.text-xl {
+        font-size: 1.25rem; /* Mobilde yazı boyutunu küçült */
+    }
+}

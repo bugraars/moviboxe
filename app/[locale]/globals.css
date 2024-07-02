@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* global.css veya benzeri bir global CSS dosyasına ekleyin */
+body {
+    overflow-x: hidden; /* Yatay kaymayı engeller */
+  }
+  
+  /* Swiper bileşeni için ek CSS */
+  .custom-swiper {
+    overflow: hidden; /* Swiper'ın taşmasını engeller */
+  }
+  
+  .swiper-container {
+    width: 100%; /* Swiper'ın genişliğini ekrana göre ayarlar */
+    box-sizing: border-box; /* Box modelini düzgün hale getirir */
+  }
+  
