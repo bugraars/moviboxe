@@ -67,7 +67,7 @@ const BannerSlider: React.FC<BannerSliderProps> = ({ endpoint, title, id }) => {
                 }}
                 pagination={pagination}
                 modules={[Navigation, Autoplay, Pagination]}
-                className="h-dvh w-full object-cover md:h-36-r"
+                className="h-90dvh w-full object-cover md:h-36-r"
             >
                 {Array.isArray(movies) && movies.length > 0 ? (
                     movies.map((movie, index) => (
@@ -76,7 +76,7 @@ const BannerSlider: React.FC<BannerSliderProps> = ({ endpoint, title, id }) => {
                                 <img
                                     src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
                                     alt={movie.title}
-                                    className=" h-dvh w-full object-cover md:h-36-r"
+                                    className=" h-90dvh w-full object-cover md:h-36-r"
                                 />
                                 <div className="z-50 absolute bottom-[40px] md:bottom-[80px] p-4 left-0 right-0 mx-auto text-white flex w-11/12">
                                     <div className='flex-col space-y-3 items-start justify-start w-4/5 lg:w-2/5'>

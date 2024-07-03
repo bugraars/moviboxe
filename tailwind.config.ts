@@ -16,6 +16,7 @@ const config: Config = {
         '36-r': '36rem',
         '48-r': '48rem',
         '60-r': '60rem',
+        '90dvh': '90dvh',
       },
     },
   },
