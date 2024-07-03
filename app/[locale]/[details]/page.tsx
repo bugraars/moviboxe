@@ -108,7 +108,7 @@ const Details: React.FC<DetailsProps> = ({ params }) => {
         }}
         pagination={pagination}
         modules={[Navigation, Autoplay, Pagination]}
-        className="h-dvh w-full object-cover md:h-48-r"
+        className="h-90dvh w-full object-cover md:h-48-r"
       >
         {movieDetails.backdrop_paths.map((path, index) => (
           <SwiperSlide key={index}>
