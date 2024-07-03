@@ -73,7 +73,7 @@ const MovieSlider: React.FC<MovieSliderProps> = ({ endpoint, title, id }) => {
                     }}
                     pagination={{ clickable: true }}
                     modules={[Navigation, Pagination]}
-                    className="custom-swiper"
+                    // className="custom-swiper"
                 >
                     {Array.isArray(movies) && movies.length > 0 ? (
                         movies.map((movie, index) => (

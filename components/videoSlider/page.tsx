@@ -74,7 +74,7 @@ const VideoSlider: React.FC<VideoSliderProps> = ({ endpoint, title }) => {
                     }}
                     pagination={{ clickable: true }}
                     modules={[Navigation, Pagination]}
-                    className="custom-swiper"
+                    // className="custom-swiper"
                 >
                     {Array.isArray(videos) && videos.length > 0 ? (
                         videos.map((video, index) => (

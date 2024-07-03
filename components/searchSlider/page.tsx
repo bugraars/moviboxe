@@ -55,7 +55,7 @@ const SearchSlider: React.FC<SearchSliderProps> = ({ title, id }) => {
           }}
           pagination={{ clickable: true }}
           modules={[Navigation, Pagination]}
-          className="custom-swiper"
+          // className="custom-swiper"
         >
           {Array.isArray(results) && results.length > 0 ? (
   results.map((movie, index) => (

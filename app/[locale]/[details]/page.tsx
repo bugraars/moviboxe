@@ -93,7 +93,7 @@ const Details: React.FC<DetailsProps> = ({ params }) => {
   };
 
   if (!movieDetails) {
-    return <Skeleton />; // Use the Skeleton component while loading
+    return <Skeleton />;
   }
 
   return (
