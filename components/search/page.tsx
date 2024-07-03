@@ -88,6 +88,15 @@ const Search = () => {
     }
   };
 
+  const handleButtonClick = () => {
+    const event = {
+      target: {
+        value: query,
+      },
+    } as React.ChangeEvent<HTMLInputElement>;
+    handleSearch(event);
+  };
+
   return (
     <div className="search-wrapper" ref={searchRef}>
       <div className="search-container">
@@ -99,7 +108,7 @@ const Search = () => {
           onChange={handleSearch}
           onFocus={() => setShowResults(true)}
         />
-        <button className="search-button" onClick={() => handleSearch({ target: { value: query } })}>
+        <button className="search-button" onClick={handleButtonClick}>
           <img src="/images/search.svg" alt="search" width={20} />
         </button>
       </div>
