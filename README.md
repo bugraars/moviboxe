@@ -15,7 +15,6 @@ You can check out the live demo of Moviboxe [here](https://moviboxe.vercel.app/d
 - **Featured Movies**: Display featured movies on the homepage.
 - **New Arrivals**: Show new arrival movies.
 - **Movie Details**: Detailed movie pages with a slider showcasing top 3 backdrops.
-- **Horizontal Sliders**: List movies horizontally using Swiper.
 
 ## Tech Stack
 
@@ -53,34 +52,10 @@ To get started with the project, follow these steps:
     ```
     Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Usage
-
-### Fetching Data from API
-
-Moviboxe fetches data from TMDb API to display movies. You can customize the API endpoints by modifying the requests in the `services` folder.
-
-### Multi-language Support
-
-The application supports English and German using i18n. You can switch languages using the language selector in the header.
-
-### Custom Search
-
-You can search for movies using the search bar. The search results will be displayed in a new section above the "Featured Movie" section.
-
-### Movie Details
-
-Clicking on a movie will lead you to the detailed movie page, which includes a slider showing the top 3 backdrops based on `vote_average`.
-
-## Contributing
-
-Contributions are welcome! Please follow these steps to contribute:
-
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature/your-feature`).
 3. Commit your changes (`git commit -m 'Add some feature'`).
 4. Push to the branch (`git push origin feature/your-feature`).
 5. Open a Pull Request.
 
-## License
 
-This project is licensed under the MIT License.
