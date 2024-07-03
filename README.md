@@ -41,11 +41,6 @@ To get started with the project, follow these steps:
     npm install
     ```
 
-3. **Create a `.env.local` file and add your TMDb API Key:**
-    ```env
-    NEXT_PUBLIC_TMDB_API_KEY=your_api_key_here
-    ```
-
 4. **Run the development server:**
     ```bash
     npm run dev
