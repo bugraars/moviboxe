@@ -1,6 +1,10 @@
-import React from 'react'
+'use client';
+import React from 'react';
+import { useTranslation } from '@/context/translationContext';
 
-export default function page() {
+export default function Page() {
+  const { messages } = useTranslation();
+
   return (
     <div className='flex flex-col items-center space-y-8 justify-center mx-auto m-12'>
         <div className="social flex flex-row space-x-12 items-center">
@@ -18,10 +22,11 @@ export default function page() {
             </a>
         </div>
         <div className='flex flex-col md:flex-row items-center md:space-x-8'>
-            <p>Conditions of Use</p>
-            <p>Privacy & Policy</p>
-            <p>Press Room</p>
-        </div>
+        <p>{messages.conditions_of_use}</p>
+        <p>{messages.privacy_policy}</p>
+        <p>{messages.press_room}</p>
+      </div>
     </div>
   )
 }
+

@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import { fetchMovies } from '@/api/fetchMovies';
 import { Movie } from '@/types/movie';
 import './style.css';
+import Link from 'next/link';
+import { useTranslation } from '@/context/translationContext';
 
 interface MovieSliderProps {
     endpoint: string;
@@ -17,6 +19,7 @@ interface MovieSliderProps {
 
 const MovieSlider: React.FC<MovieSliderProps> = ({ endpoint, title, id }) => {
     const [movies, setMovies] = useState<Movie[]>([]);
+    const { messages, locale } = useTranslation();
 
     useEffect(() => {
         const getMovies = async () => {
@@ -25,18 +28,22 @@ const MovieSlider: React.FC<MovieSliderProps> = ({ endpoint, title, id }) => {
                 setMovies(movies);
             } catch (error) {
                 console.error("Error fetching movies:", error);
-                setMovies([]); 
+                setMovies([]);
             }
         };
 
         getMovies();
     }, [endpoint]);
 
+    const getGenreNames = (genreIds: number[]): string[] => {
+        return genreIds.map(id => messages.genres[id.toString()] || 'Unknown');
+    };
+
     return (
         <div className="m-8">
             <div className='m-5 flex justify-between items-center'>
-                <h3 className="font-bold text-xl md:text-3xl">{title}</h3>
-                <a href="#" className='text-red-700 flex items-center'>See more <img src="/images/Chevron right.svg" alt="right arrow" /></a>
+                <h3 className="font-bold text-xl md:text-3xl">{messages[title]}</h3>
+                <a href="#" className='text-red-700 flex items-center'>{messages.see_more} <img src="/images/Chevron right.svg" alt="right arrow" /></a>
             </div>
             <div className="relative">
                 <Swiper
@@ -72,20 +79,31 @@ const MovieSlider: React.FC<MovieSliderProps> = ({ endpoint, title, id }) => {
                         movies.map((movie, index) => (
                             <SwiperSlide key={index}>
                                 <div className="flex flex-col items-center">
-                                    <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} className="w-full h-auto" />
-                                    <div className="w-full text-center mt-2">
+                                    <Link href={`/${locale}/${movie.id}`}>
+                                        <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} className="w-full h-auto cursor-pointer" />
+                                    </Link>
+                                    <div className="w-full mt-2">
                                         <small className="text-xs font-bold text-c-gray">{movie.release_date.split('-')[0]}</small>
-                                        <h3 className="text-lg font-semibold">{movie.title}</h3>
+                                        <Link href={`/${locale}/${movie.id}`}>
+                                            <h3 className="text-lg font-semibold cursor-pointer">{movie.title}</h3>
+                                        </Link>
                                         <div className='flex justify-between'>
-                                            <span className='flex'><img src="/images/IMDB.svg" alt="IMDB" /><p className='text-xs mx-1'>{movie.vote_average}</p></span>
+                                            <span className='flex items-center'>
+                                                <img src="/images/IMDB.svg" alt="IMDB" />
+                                                <p className='text-xs mx-1'>{movie.vote_average.toFixed(1)}/10</p>
+                                            </span>
+                                            <span className='flex items-center'>
+                                            <img src="/images/Tomato.svg" alt="Ratings" />
+                                            <p className='text-xs mx-1'>{movie.popularity.toFixed(1)}</p>
+                                            </span>
                                         </div>
-                                        <p className="my-2 text-xs font-bold text-c-gray">{movie.genre_ids.join(', ')}</p>
+                                        <p className="my-2 text-xs font-bold text-c-gray">{getGenreNames(movie.genre_ids).join(', ')}</p>
                                     </div>
                                 </div>
                             </SwiperSlide>
                         ))
                     ) : (
-                        <div className="p-4 text-center">No movies found</div>
+                        <div className="p-4 text-center">{messages.no_movies_found}</div>
                     )}
                 </Swiper>
                 <div className="swiper-navigation md:flex hidden">

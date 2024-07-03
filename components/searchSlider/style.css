@@ -6,14 +6,21 @@
 .movie-poster {
   width: 100%;
   height: auto;
+  display: block;
 }
 
-.fallback-poster {
+.error-poster {
+  display: block;
+  background-color: #f0f0f0;
   width: 100%;
-  height: 100%;
-  background-color: grey;
+  height: 456px;
 }
-
+@media (max-width: 768px) {
+  .error-poster {
+    height: 300px;
+  }
+  
+}
 .swiper-pagination-bullet {
   width: auto;
   height: auto;

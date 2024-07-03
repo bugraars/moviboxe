@@ -6,8 +6,12 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 import { useEffect, useState } from 'react';
 import { fetchMovies } from '@/api/fetchMovies';
+import fetchVideos from '@/api/fetchVideos';
 import { Movie } from '@/types/movie';
 import './style.css';
+import { useTranslation } from '@/context/translationContext';
+import Link from 'next/link';
+import Cookies from 'js-cookie';
 
 interface VideoSliderProps {
     endpoint: string;
@@ -16,12 +20,21 @@ interface VideoSliderProps {
 
 const VideoSlider: React.FC<VideoSliderProps> = ({ endpoint, title }) => {
     const [videos, setVideos] = useState<Movie[]>([]);
+    const [trailers, setTrailers] = useState<{ [key: number]: string }>({});
+    const locale = Cookies.get('NEXT_LOCALE') || 'en';
+    const { messages } = useTranslation();
 
     useEffect(() => {
         const getVideos = async () => {
             try {
-                const videos = await fetchMovies(endpoint);
-                setVideos(videos);
+                const movies = await fetchMovies(endpoint);
+                setVideos(movies.slice(0, 5)); // İlk 5 videoyu alıyoruz
+                const trailersData = await Promise.all(movies.slice(0, 5).map(async (movie: any) => {
+                    const trailer = await fetchVideos(movie.id.toString(), locale);
+                    return { [movie.id]: trailer ? `https://www.youtube.com/watch?v=${trailer.key}` : '#' };
+                }));
+
+                setTrailers(Object.assign({}, ...trailersData));
             } catch (error) {
                 console.error("Error fetching videos:", error);
                 setVideos([]);
@@ -29,13 +42,13 @@ const VideoSlider: React.FC<VideoSliderProps> = ({ endpoint, title }) => {
         };
 
         getVideos();
-    }, [endpoint]);
+    }, [endpoint, locale]);
 
     return (
         <div className="m-8">
             <div className='m-5 flex justify-between items-center'>
-                <h3 className="font-bold text-xl md:text-3xl">{title}</h3>
-                <a href="#" className='text-red-700 flex items-center'>See more <img src="/images/Chevron right.svg" alt="right arrow" /></a>
+                <h3 className="font-bold text-xl md:text-3xl">{messages[title]}</h3>
+                <a href="#" className='text-red-700 flex items-center'>{messages.see_more} <img src="/images/Chevron right.svg" alt="right arrow" /></a>
             </div>
             <div className="relative">
                 <Swiper
@@ -62,7 +75,6 @@ const VideoSlider: React.FC<VideoSliderProps> = ({ endpoint, title }) => {
                     pagination={{ clickable: true }}
                     modules={[Navigation, Pagination]}
                     className="custom-swiper"
-                    
                 >
                     {Array.isArray(videos) && videos.length > 0 ? (
                         videos.map((video, index) => (
@@ -71,7 +83,13 @@ const VideoSlider: React.FC<VideoSliderProps> = ({ endpoint, title }) => {
                                     <div className='flex items-center '>
                                         <img src={`https://image.tmdb.org/t/p/w500${video.backdrop_path}`} alt={video.title} className="w-full h-auto" />
                                         <div className="absolute inset-0 flex items-center justify-center">
-                                            <img src="/images/play 2.svg" alt="Play icon" className="w-12 h-12" />
+                                            <a
+                                                href={trailers[video.id] || '#'}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                <img src="/images/play 2.svg" alt="Play icon" className="w-14 h-14" />
+                                            </a>
                                         </div>
                                     </div>
                                     <div className="w-full text-center mt-2">
@@ -81,7 +99,7 @@ const VideoSlider: React.FC<VideoSliderProps> = ({ endpoint, title }) => {
                             </SwiperSlide>
                         ))
                     ) : (
-                        <div className="p-4 text-center">No videos found</div>
+                        <div className="p-4 text-center">{messages.no_videos_found}</div>
                     )}
                 </Swiper>
                 <div className="swiper-navigation md:flex hidden">

@@ -1,3 +1,4 @@
+// app/[locale]/[details]/page.tsx
 'use client';
 import React, { useEffect, useState } from "react";
 import Cookies from 'js-cookie';
@@ -7,8 +8,10 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import fetchVideos from '@/api/fetchVideos';
-import { Movie } from '@/types/movie'; 
+import { Movie } from '@/types/movie';
 import './style.css';
+import { useTranslation } from '@/context/translationContext';
+import Skeleton from '@/components/skeleton/page';
 
 interface DetailsProps {
   params: {
@@ -20,6 +23,7 @@ interface DetailsProps {
 const Details: React.FC<DetailsProps> = ({ params }) => {
   const [movieDetails, setMovieDetails] = useState<Movie | null>(null);
   const { details: id, locale } = params;
+  const { messages } = useTranslation();
   const pagination = {
     clickable: true,
     renderBullet: (index: number, className: string) => {
@@ -40,7 +44,8 @@ const Details: React.FC<DetailsProps> = ({ params }) => {
         method: 'GET',
         headers: {
           accept: 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_KEY}`}
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NmM3MDAyY2RlODFlZTZmMjRhYjRkZjJiNmFiZGEyYiIsIm5iZiI6MTcxOTYwOTIxOS45NTgxOSwic3ViIjoiNjY3ZjIwMGE2OTg3ZDc0YmFhM2JkYjZlIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.AR1vIdswYVMLiAZus1Vs_M0Ta-OAeefkF1dxT66xsTQ'
+        }
       };
 
       try {
@@ -61,8 +66,6 @@ const Details: React.FC<DetailsProps> = ({ params }) => {
           backdrop_paths: topBackdrops,
           title: data.title,
           overview: data.overview,
-          imdbRating: data.vote_average.toString(),
-          tomatoRating: data.popularity.toString(),
           id: data.id,
           trailerLink: trailer ? `https://www.youtube.com/watch?v=${trailer.key}` : '',
           year: "",
@@ -71,8 +74,9 @@ const Details: React.FC<DetailsProps> = ({ params }) => {
           backdrop_path: "",
           release_date: "",
           genre_ids: [],
-          vote_average: 0,
-          poster_path: ""
+          vote_average: data.vote_average,
+          poster_path: "",
+          popularity: data.popularity,
         };
 
         setMovieDetails(movieData);
@@ -89,7 +93,7 @@ const Details: React.FC<DetailsProps> = ({ params }) => {
   };
 
   if (!movieDetails) {
-    return <div>Loading...</div>;
+    return <Skeleton />; // Use the Skeleton component while loading
   }
 
   return (
@@ -120,9 +124,9 @@ const Details: React.FC<DetailsProps> = ({ params }) => {
                   <h3 className='font-bold text-3xl md:text-4xl lg:text-5xl'>{movieDetails.title}</h3>
                   <span className='flex items-center space-x-4'>
                     <img src="/images/IMDB.svg" alt="IMDB" />
-                    <p>{movieDetails.imdbRating}/100</p>
+                    <p>{movieDetails.vote_average.toFixed(1)}/10</p>
                     <img src="/images/Tomato.svg" alt="Ratings" />
-                    <p>{movieDetails.tomatoRating}%</p>
+                    <p>{movieDetails.popularity.toFixed(1)}</p>
                   </span>
                   <span className="block w-full text-justify">
                     <p className="m-0">{truncateOverview(movieDetails.overview)}</p>
@@ -134,7 +138,7 @@ const Details: React.FC<DetailsProps> = ({ params }) => {
                       rel="noopener noreferrer"
                       className='inline-flex items-center justify-center bg-c-red text-white font-semibold py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition duration-150 ease-in-out'
                     >
-                      <img src="/images/Play.svg" alt="play" className='m-1' /> WATCH TRAILER
+                      <img src="/images/Play.svg" alt="play" className='m-1' /> {messages.watch_trailer}
                     </a>
                   </div>
                 </div>
@@ -149,3 +153,4 @@ const Details: React.FC<DetailsProps> = ({ params }) => {
 };
 
 export default Details;
+

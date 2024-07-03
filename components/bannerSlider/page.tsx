@@ -11,6 +11,7 @@ import { Movie } from '@/types/movie';
 import './style.module.css';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
+import { useTranslation } from '@/context/translationContext';
 
 interface BannerSliderProps {
     endpoint: string;
@@ -22,6 +23,8 @@ const BannerSlider: React.FC<BannerSliderProps> = ({ endpoint, title, id }) => {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [trailers, setTrailers] = useState<{ [key: number]: string }>({});
     const locale = Cookies.get('NEXT_LOCALE') || 'en';
+    const { messages } = useTranslation();
+
     const pagination = {
         clickable: true,
         renderBullet: (index: number, className: string) => {
@@ -80,9 +83,9 @@ const BannerSlider: React.FC<BannerSliderProps> = ({ endpoint, title, id }) => {
                                         <Link href={`${locale}/${movie.id}`} className='font-bold text-3xl md:text-4xl lg:text-5xl'>{movie.title}</Link>
                                         <span className='flex items-center space-x-4'>
                                             <img src="/images/IMDB.svg" alt="IMDB" />
-                                            <p>{movie.imdbRating}/100</p>
+                                            <p>{movie.vote_average.toFixed(1)}/10</p>
                                             <img src="/images/Tomato.svg" alt="Ratings" />
-                                            <p>{movie.tomatoRating}%</p>
+                                            <p>{movie.popularity.toFixed(1)}</p>
                                         </span>
                                         <span className="block w-full text-justify">
                                             <p className="m-0">{truncateOverview(movie.overview)}</p>
@@ -94,7 +97,7 @@ const BannerSlider: React.FC<BannerSliderProps> = ({ endpoint, title, id }) => {
                                                 rel="noopener noreferrer"
                                                 className='inline-flex items-center justify-center bg-c-red text-white font-semibold py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition duration-150 ease-in-out'
                                             >
-                                                <img src="/images/Play.svg" alt="play" className='m-1' /> WATCH TRAILER
+                                                <img src="/images/Play.svg" alt="play" className='m-1' /> {messages.watch_trailer}
                                             </a>
 
                                         </div>
@@ -104,7 +107,7 @@ const BannerSlider: React.FC<BannerSliderProps> = ({ endpoint, title, id }) => {
                         </SwiperSlide>
                     ))
                 ) : (
-                    <div className="p-4 text-center">No movies found</div>
+                    <div className="p-4 text-center">{messages.no_movies_found}</div>
                 )}
             </Swiper>
             <div className="swiper-pagination flex flex-col absolute right-4 top-1/2 transform -translate-y-1/2 z-20 space-y-2"></div>

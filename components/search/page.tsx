@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import './style.css';
+import { useTranslation } from '@/context/translationContext';
 
 const Search = () => {
   const { query, setQuery, setResults } = useSearch();
@@ -15,19 +16,15 @@ const Search = () => {
   const searchRef = useRef<HTMLDivElement>(null);
   const params = useParams();
   const locale = params.locale as string;
+  const { messages } = useTranslation();
 
-  const genreMap: { [key: string]: string } = {
-    "28": "Action",
-    "12": "Adventure",
-    "16": "Animation",
-  };
-
-  
   useEffect(() => {
     const localeCookie = Cookies.get('NEXT_LOCALE') || 'en';
     const languageMap: { [key: string]: string } = {
       en: 'en-US',
       de: 'de-DE',
+      tr: 'tr-TR',
+      // Diğer diller
     };
     setLanguage(languageMap[localeCookie] || 'en-US');
 
@@ -47,6 +44,7 @@ const Search = () => {
     let newQuery = event.target.value;
     setQuery(newQuery);
 
+    // Birden fazla boşluğu tek bir boşluğa indirgeme
     newQuery = newQuery.replace(/\s+/g, ' ');
 
     if (newQuery.trim().length > 0) {
@@ -54,7 +52,8 @@ const Search = () => {
         method: 'GET',
         headers: {
           accept: 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_KEY}`}
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NmM3MDAyY2RlODFlZTZmMjRhYjRkZjJiNmFiZGEyYiIsIm5iZiI6MTcxOTYwOTIxOS45NTgxOSwic3ViIjoiNjY3ZjIwMGE2OTg3ZDc0YmFhM2JkYjZlIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.AR1vIdswYVMLiAZus1Vs_M0Ta-OAeefkF1dxT66xsTQ'
+        }
       };
 
       try {
@@ -70,12 +69,14 @@ const Search = () => {
           id: item.id,
           backdrop_path: item.backdrop_path ? `https://image.tmdb.org/t/p/original${item.backdrop_path}` : '/images/placeholder.png',
           title: item.title || item.name,
-          genres: item.genre_ids.map((id: number) => genreMap[id.toString()] || 'Unknown'),
-          poster: item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : '/images/placeholder.png'
+          genres: item.genre_ids.map((id: number) => messages.genres[id.toString()] || 'Unknown'),
+          poster: item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : '/images/placeholder.png',
+          vote_average: item.vote_average,
+          popularity: item.popularity,
         }));
 
         setLocalResults(fetchedResults);
-        setResults(fetchedResults); 
+        setResults(fetchedResults);
         setShowResults(true);
       } catch (err) {
         console.error(err);
@@ -93,7 +94,7 @@ const Search = () => {
         <input 
           type="text" 
           className="search-input" 
-          placeholder="Search..." 
+          placeholder={messages.search_placeholder}
           value={query}
           onChange={handleSearch}
           onFocus={() => setShowResults(true)}
@@ -117,7 +118,7 @@ const Search = () => {
               </Link>
             ))
           ) : (
-            <div className="no-results">No results found</div>
+            <div className="no-results">{messages.no_results_found}</div>
           )}
         </div>
       )}

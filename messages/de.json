@@ -1,19 +1,26 @@
 {
-  "IndexPage": {
-    "title": "contoh next-intl",
-    "description": "Selamat datang di contoh Next.js Internationalization (i18n)! Demo ini memperlihatkan kekuatan App Router dan cara mengelola konten multibahasa dengan lancar menggunakan next-intl."
+  "loading": "Wird geladen...",
+  "watch_trailer": "TRAILER ANSEHEN",
+  "conditions_of_use": "Nutzungsbedingungen",
+  "privacy_policy": "Datenschutzrichtlinie",
+  "press_room": "Pressebereich",
+  "no_movies_found": "Keine Filme gefunden",
+  "see_more": "Mehr sehen",
+  "featured_movies": "Empfohlene Filme",
+  "new_arrivals": "Neue Ankünfte",
+  "exclusive_videos": "Exklusive Videos",
+  "banner_movies": "Banner-Filme",
+  "search_results": "Suchergebnisse",
+  "search_placeholder": "Suchen...",
+  "no_results_found": "Keine Ergebnisse gefunden",
+  "no_videos_found": "Keine Videos gefunden",
+  "social_media": {
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "twitter": "Twitter",
+    "youtube": "YouTube"
   },
-  "NotFoundPage": {
-    "title": "Halaman Tidak Ditemukan",
-    "description": "Ups! Sepertinya Anda menemukan halaman yang tidak ada. Jangan khawatir, sihir internasionalisasi kami masih bekerja keras di bagian lain aplikasi. Silakan kembali untuk menjelajahi lebih lanjut!"
-  },
-  "Navigation": {
-    "home": "Beranda"
-  },
-  "Footer": {
-    "copyright": "© 2024 Aplikasi Anda. Hak cipta dilindungi."
-  },
-  "Genres": {
+  "genres": {
     "28": "Aktion",
     "12": "Abenteuer",
     "16": "Animation",

@@ -33,12 +33,4 @@
     .swiper-button-prev {
         display: none; 
     }
-
-    .swiper-slide {
-        width: 80% !important;
-    }
-
-    h3.text-xl {
-        font-size: 1.25rem;
-    }
 }

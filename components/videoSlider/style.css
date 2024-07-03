@@ -35,13 +35,3 @@
     }
     
 }
-@media (max-width: 768px) {
-
-    .swiper-slide {
-        width: 100% !important;
-    }
-
-    h3.text-xl {
-        font-size: 1.25rem;
-    }
-}
